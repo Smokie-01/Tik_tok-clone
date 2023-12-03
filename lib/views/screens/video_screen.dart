@@ -51,11 +51,12 @@ class _VideoScreenState extends State<VideoScreen> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(1),
+            padding: const EdgeInsets.all(1),
             height: 50,
             width: 50,
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Colors.green, Colors.yellow]),
+              gradient:
+                  const LinearGradient(colors: [Colors.green, Colors.yellow]),
               color: Colors.white,
               borderRadius: BorderRadius.circular(25),
             ),
@@ -226,7 +227,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                       height: 7,
                                     ),
                                     Text(data.shareCount.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20, color: Colors.white))
                                   ],
                                 ),

@@ -168,18 +168,18 @@ class _ProfileCsreenState extends State<ProfileScreen> {
                                 profileController.users["thumbNails"].length,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
+                                const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2),
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: Image.network(profileController
-                                      .users['thumbNails'][index]),
+                                child: SizedBox(
                                   height: 100,
                                   width: 100,
+                                  child: Image.network(profileController
+                                      .users['thumbNails'][index]),
                                 ),
                               );
                             })

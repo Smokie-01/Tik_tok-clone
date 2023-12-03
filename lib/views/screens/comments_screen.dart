@@ -8,7 +8,7 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class CommentsScreen extends StatefulWidget {
   final String postId;
-  CommentsScreen({
+  const CommentsScreen({
     super.key,
     required this.postId,
   });

@@ -44,10 +44,7 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
               aspectRatio: videoPlayerController.value.aspectRatio,
               child: VideoPlayer(videoPlayerController),
             )
-          : Container(
-              child: VideoPlayer(videoPlayerController),
-            ),
-      // child: VideoPlayer(videoPlayerController),
+          : VideoPlayer(videoPlayerController),
     );
   }
 }

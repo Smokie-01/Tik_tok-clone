@@ -9,7 +9,7 @@ class ProfileController extends GetxController {
 
   Map<String, dynamic> get users => _users.value;
 
-  Rx<String> _uid = "".obs;
+  final Rx<String> _uid = "".obs;
 
   updateId(String uid) {
     _uid.value = uid;
