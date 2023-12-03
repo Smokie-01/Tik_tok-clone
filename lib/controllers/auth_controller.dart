@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,13 +12,16 @@ class AuthController extends GetxController {
   static AuthController instance = Get.find();
 
   // global variable to hold the selected image
-  late Rx<File?> _pickedImage;
+  final RxString _pickedImage = "".obs;
+  String get pickImage => _pickedImage.value;
 
-// getter which will get the image
-  File? get profilePhoto => _pickedImage.value;
-
-  //
+  // global variable to acces user;
   late Rx<User?> _user;
+
+//gettert which returns the current valu of the user;
+  User? get user => _user.value;
+
+  bool isImagePicked = false;
 
   @override
   void onReady() {
@@ -37,19 +39,15 @@ class AuthController extends GetxController {
     }
   }
 
-  bool isImagePicked = false;
-
   //Pick Image
-  pickImage() async {
+  captureImage() async {
     try {
       final pickImage = await ImagePicker()
           .pickImage(source: ImageSource.gallery, imageQuality: 70);
+
       if (pickImage != null) {
-        Get.snackbar(
-            "Profile Picture ", "You have succesfully up,oaded the picture");
-        isImagePicked = true;
+        _pickedImage.value = pickImage.path;
       }
-      _pickedImage = Rx<File?>(File(pickImage!.path));
     } on Exception catch (e) {
       Get.snackbar("Error", e.toString());
     }
@@ -104,12 +102,19 @@ class AuthController extends GetxController {
       if (email.isNotEmpty && password.isNotEmpty) {
         await firebaseAuth.signInWithEmailAndPassword(
             email: email, password: password);
-        log("logged in");
       } else {
         Get.snackbar("Error creating Account", "Please enter all the feilds");
       }
     } catch (e) {
       Get.snackbar("Error creating Account", e.toString());
     }
+  }
+
+  signOut() {
+    firebaseAuth.signOut();
+  }
+
+  clearImage() {
+    _pickedImage.value = "";
   }
 }

@@ -1,7 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/constants.dart';
+import 'package:tiktok_clone/views/screens/auth/signup_screen.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -63,10 +62,10 @@ class LoginScreen extends StatelessWidget {
                 authController.loginUser(_emailController.text.trim(),
                     _passwordController.text.trim());
               },
-              child: Text("Login"),
               style: ElevatedButton.styleFrom(
                   minimumSize: Size(width * .85, height * .05),
                   backgroundColor: buttonColor),
+              child: const Text("Login"),
             ),
             SizedBox(
               height: height * 0.025,
@@ -77,10 +76,17 @@ class LoginScreen extends StatelessWidget {
                 Text("You don't have account ? ",
                     style: TextStyle(color: buttonColor)),
                 InkWell(
-                    onTap: () {},
-                    child: const Text(
-                      "Register",
-                    ))
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SignUpScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Register",
+                  ),
+                ),
               ],
             )
           ],

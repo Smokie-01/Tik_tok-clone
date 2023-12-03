@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
-
 import '../../../constants/constants.dart';
 
 const defaultImage =
@@ -46,21 +45,25 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 Stack(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: FileImage(authController.profilePhoto!),
-                      radius: 60,
-                      backgroundColor: Colors.white,
-                    ),
+                    Obx(() {
+                      return CircleAvatar(
+                        backgroundImage: authController.isImagePicked
+                            ? FileImage(File(defaultImage))
+                            : FileImage(File(authController.pickImage)),
+                        radius: 60,
+                        backgroundColor: Colors.white,
+                      );
+                    }),
                     Positioned(
                       bottom: -10,
                       left: 70,
                       child: IconButton(
                           onPressed: () {
-                            authController.pickImage();
+                            authController.captureImage();
                           },
                           icon: const Icon(
                             Icons.add_a_photo,
-                            color: Colors.white,
+                            color: Colors.redAccent,
                           )),
                     )
                   ],
@@ -109,7 +112,7 @@ class SignUpScreen extends StatelessWidget {
                         _userNameController.text.trim(),
                         _emailController.text.trim(),
                         _passwordController.text.trim(),
-                        authController.profilePhoto);
+                        File(authController.pickImage));
                   },
                   style: ElevatedButton.styleFrom(
                       minimumSize: Size(width * .85, height * .05),
@@ -125,7 +128,11 @@ class SignUpScreen extends StatelessWidget {
                     Text("Already have an account ! ",
                         style: TextStyle(color: buttonColor)),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoginScreen()));
+                        authController.clearImage();
+                      },
                       child: const Text(
                         "Login",
                       ),
