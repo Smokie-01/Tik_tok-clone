@@ -44,120 +44,149 @@ class _ProfileCsreenState extends State<ProfileScreen> {
               title: Text(profileController.users['name']),
               actions: const [Icon(Icons.more_horiz)],
             ),
-            body: Container(
-              height: size.height,
-              width: size.width,
-              padding: EdgeInsets.symmetric(
-                  horizontal: size.width * .002, vertical: size.height * .002),
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      ClipOval(
-                        child: CachedNetworkImage(
-                            height: 100,
-                            width: 100,
-                            imageUrl: profileController.users['profileImage'],
-                            errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
-                            placeholder: (context, url) => const Center(
-                                child: CircularProgressIndicator()),
-                            fit: BoxFit.cover),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                profileController.users['Following'],
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w300),
+            body: SingleChildScrollView(
+              child: Container(
+                height: size.height,
+                width: size.width,
+                padding: EdgeInsets.symmetric(
+                    horizontal: size.width * .002,
+                    vertical: size.height * .002),
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        ClipOval(
+                          child: CachedNetworkImage(
+                              height: 100,
+                              width: 100,
+                              imageUrl: profileController.users['profileImage'],
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
+                              fit: BoxFit.cover),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  profileController.users['Following'],
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const Text(
+                                  " Following ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  profileController.users['likes'],
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const Text(
+                                  " Likes ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  profileController.users['Followers'],
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const Text(
+                                  " Followers ",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            if (authController.user!.uid == widget.userId) {
+                              authController.signOut();
+                            } else {
+                              controller.followUser();
+                            }
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.grey),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Center(
+                              child: Text(
+                                authController.user!.uid == widget.userId
+                                    ? "Sign Out"
+                                    : profileController.users['isFollowing']
+                                        ? "Follow"
+                                        : "Unfollow",
+                                style: const TextStyle(fontSize: 20),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                " Following ",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w300),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                profileController.users['likes'],
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w300),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                " Likes ",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w300),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                profileController.users['Followers'],
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w300),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                " Followers ",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w300),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (authController.user!.uid == widget.userId) {
-                            authController.signOut();
-                          } else {
-                            controller.followUser();
-                          }
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Center(
-                            child: Text(
-                              authController.user!.uid == widget.userId
-                                  ? "Sign Out"
-                                  : profileController.users['isFollowing']
-                                      ? "Unfollow"
-                                      : "Follow",
-                              style: const TextStyle(fontSize: 20),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        GridView.builder(
+                            itemCount:
+                                profileController.users["thumbNails"].length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  child: Image.network(profileController
+                                      .users['thumbNails'][index]),
+                                  height: 100,
+                                  width: 100,
+                                ),
+                              );
+                            })
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           );
